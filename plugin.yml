@@ -1,0 +1,5 @@
+name: LobbyCore
+version: 2.0.0
+author: JuqnGOOD
+main: juqn\lobbycore\LobbyCore
+api: 5.0.0

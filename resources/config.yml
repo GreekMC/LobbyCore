@@ -1,0 +1,24 @@
+# Plugin create by JuqnGOOD
+# Copyright ©️ 2024 - JuqnGOOD
+scoreboard-titles:
+  - 'Messi'
+  - 'Messi'
+  - 'M'
+  - 'Me'
+  - 'Mes'
+  - 'Mess'
+  - 'Messi'
+scoreboard-lines:
+  - '&r&7{date}'
+  - ''
+  - '&r&eOnline:&r'
+  - '&r&f{players}/{max_players}'
+  - ''
+  - '&r&eRank:&r'
+  - '&r{rank}'
+  - ''
+  - '&r&eCoins:'
+  - '&r&f{coins}'
+  - ''
+  - '&r&7greekmc.net'
+server-tick.update: 100
