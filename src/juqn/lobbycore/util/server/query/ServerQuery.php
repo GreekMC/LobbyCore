@@ -33,8 +33,11 @@ final class ServerQuery
                 $payload = "\x00\x00\x00\x00";
                 $request_stat = "\xFE\xFD" . "\x00" . pack('N', rand(1, 9999999)) . pack('N', intval($token)) . $payload;
                 socket_write($socket, $request_stat, strlen($request_stat));
-
-                $buff = substr(socket_read($socket, 65535), 5);
+                
+                $readder = socket_read($socket, 65535);
+                
+                if (!$readder) return null;
+                $buff = substr($readder, 5);
 
                 if ($buff) {
                     return self::parseData($buff);

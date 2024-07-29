@@ -6,7 +6,8 @@ namespace juqn\lobbycore\extension\rank;
 
 use juqn\lobbycore\extension\Extension;
 use juqn\lobbycore\LobbyCore;
-use juqn\ranks\session\SessionManager;
+use juqn\ranks\profile\ProfileManager;
+use juqn\ranks\util\RankInfo;
 use pocketmine\player\Player;
 use pocketmine\utils\SingletonTrait;
 use pocketmine\utils\TextFormat;
@@ -18,10 +19,13 @@ final class RankExtension extends Extension
     public function getCurrentRank(Player $player): string
     {
         if ($this->enabled) {
-            $session = SessionManager::getInstance()->getSession($player);
+            $session = ProfileManager::getInstance()->get($player);
 
             if ($session !== null) {
-                return TextFormat::colorize($session->getPrimaryRank()->getColor() . $session->getPrimaryRank()->getName());
+                $ranks = array_filter($session->getRanks(), fn(RankInfo $info) => !$info->isExpired());
+                
+                if (count($ranks) === 0) return '&7Guest';
+                return implode(' ', array_map(fn(RankInfo $rankInfo) => $rankInfo->getRank()->getFormat(), array_values($ranks)));
             }
         }
         return TextFormat::colorize('&cNo plugin available');
