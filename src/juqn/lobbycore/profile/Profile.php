@@ -6,6 +6,7 @@ namespace juqn\lobbycore\profile;
 
 use juqn\lobbycore\extension\coin\CoinExtension;
 use juqn\lobbycore\extension\rank\RankExtension;
+use juqn\lobbycore\LobbyCore;
 use juqn\lobbycore\server\ServerManager;
 use juqn\lobbycore\server\Server;
 use juqn\lobbycore\util\Scoreboard;

@@ -22,10 +22,12 @@ final class RankExtension extends Extension
             $session = ProfileManager::getInstance()->get($player);
 
             if ($session !== null) {
-                $ranks = array_filter($session->getRanks(), fn(RankInfo $info) => !$info->isExpired());
-                
-                if (count($ranks) === 0) return '&7Guest';
-                return implode(' ', array_map(fn(RankInfo $rankInfo) => $rankInfo->getRank()->getFormat(), array_values($ranks)));
+                $ranks = array_filter($session->getRanks(), fn (RankInfo $info) => !$info->isExpired());
+
+                if (count($ranks) === 0) {
+                    return '&7Guest';
+                }
+                return implode(' ', array_map(fn (RankInfo $rankInfo) => $rankInfo->getRank()->getFormat(), array_values($ranks)));
             }
         }
         return TextFormat::colorize('&cNo plugin available');
