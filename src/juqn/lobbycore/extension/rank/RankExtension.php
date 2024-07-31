@@ -27,7 +27,7 @@ final class RankExtension extends Extension
                 if (count($ranks) === 0) {
                     return '&7Guest';
                 }
-                return implode(' ', array_map(fn (RankInfo $rankInfo) => $rankInfo->getRank()->getFormat(), array_values($ranks)));
+                return implode('&r&7, ', array_map(fn (RankInfo $rankInfo) => $rankInfo->getRank()->getFormat(), array_values($ranks)));
             }
         }
         return TextFormat::colorize('&cNo plugin available');
