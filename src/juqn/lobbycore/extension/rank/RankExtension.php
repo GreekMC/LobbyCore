@@ -12,37 +12,30 @@ use pocketmine\player\Player;
 use pocketmine\utils\SingletonTrait;
 use pocketmine\utils\TextFormat;
 
-final class RankExtension extends Extension
-{
-    use SingletonTrait;
+final class RankExtension extends Extension {
+	use SingletonTrait;
 
-    public function getCurrentRank(Player $player): string
-    {
-        if ($this->enabled) {
-            $session = ProfileManager::getInstance()->get($player);
+	public function getCurrentRank(Player $player) : string {
+		if ($this->enabled) {
+			$session = ProfileManager::getInstance()->get($player);
 
-            if ($session !== null) {
-                $ranks = array_filter($session->getRanks(), fn (RankInfo $info) => !$info->isExpired());
+			if ($session !== null) {
+				$ranks = array_filter($session->getRanks(), fn(RankInfo $info) => !$info->isExpired());
 
-                if (count($ranks) === 0) {
-                    return '&7Guest';
-                }
-                return implode('&r&7, ', array_map(fn (RankInfo $rankInfo) => $rankInfo->getRank()->getFormat(), array_values($ranks)));
-            }
-        }
-        return TextFormat::colorize('&cNo plugin available');
-    }
+				if (count($ranks) === 0) return '&7Guest';
+				return implode('&r&7, ', array_map(fn(RankInfo $rankInfo) => $rankInfo->getRank()->getFormat(), array_values($ranks)));
+			}
+		}
+		return TextFormat::colorize('&cNo plugin available');
+	}
 
-    public function load(): void
-    {
-        if (LobbyCore::getInstance()->getServer()->getPluginManager()->getPlugin('Ranks') !== null) {
-            $this->enabled = true;
+	public function load() : void {
+		if (LobbyCore::getInstance()->getServer()->getPluginManager()->getPlugin('Ranks') !== null) {
+			$this->enabled = true;
 
-            LobbyCore::getInstance()->getLogger()->info('Rank extension has been enabled');
-        }
-    }
+			LobbyCore::getInstance()->getLogger()->info('Rank extension has been enabled');
+		}
+	}
 
-    public function save(): void
-    {
-    }
+	public function save() : void {}
 }

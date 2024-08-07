@@ -17,80 +17,64 @@ use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
 
-final class ProfileListener implements Listener
-{
-    public function handleBreak(BlockBreakEvent $event): void
-    {
-        $player = $event->getPlayer();
+final class ProfileListener implements Listener {
+	public function handleBreak(BlockBreakEvent $event) : void {
+		$player = $event->getPlayer();
 
-        if ($player->hasPermission('block.interact')) {
-            return;
-        }
-        $event->cancel();
-    }
+		if ($player->hasPermission('block.interact')) return;
+		$event->cancel();
+	}
 
-    public function handlePlace(BlockPlaceEvent $event): void
-    {
-        $player = $event->getPlayer();
+	public function handlePlace(BlockPlaceEvent $event) : void {
+		$player = $event->getPlayer();
 
-        if ($player->hasPermission('block.interact')) {
-            return;
-        }
-        $event->cancel();
-    }
+		if ($player->hasPermission('block.interact')) return;
+		$event->cancel();
+	}
 
-    public function handleDamage(EntityDamageEvent $event): void
-    {
-        $entity = $event->getEntity();
+	public function handleDamage(EntityDamageEvent $event) : void {
+		$entity = $event->getEntity();
 
-        if (!$entity instanceof Player) {
-            return;
-        }
-        $event->cancel();
+		if (!$entity instanceof Player) return;
+		$event->cancel();
 
-        if ($event->getCause() === EntityDamageEvent::CAUSE_VOID) {
-            $entity->teleport($entity->getServer()->getWorldManager()->getDefaultWorld()->getSpawnLocation());
-        }
-    }
+		if ($event->getCause() === EntityDamageEvent::CAUSE_VOID) $entity->teleport($entity->getServer()->getWorldManager()->getDefaultWorld()->getSpawnLocation());
+	}
 
-    public function handleDropItem(PlayerDropItemEvent $event): void
-    {
-        $event->cancel();
-    }
+	public function handleDropItem(PlayerDropItemEvent $event) : void {
+		$event->cancel();
+	}
 
-    public function handleItemUse(PlayerItemUseEvent $event): void
-    {
-        $player = $event->getPlayer();
-        $item = $event->getItem();
+	public function handleItemUse(PlayerItemUseEvent $event) : void {
+		$player = $event->getPlayer();
+		$item = $event->getItem();
 
-        switch (TextFormat::clean($item->getCustomName())) {
-            case 'Servers':
-                $event->cancel();
+		switch (TextFormat::clean($item->getCustomName())) {
+			case 'Servers':
+				$event->cancel();
 
-                ServerMenu::getInstance()->sendTo($player);
-                break;
+				ServerMenu::getInstance()->sendTo($player);
+				break;
 
-            case 'Enderbutt':
-                $event->cancel();
+			case 'Enderbutt':
+				$event->cancel();
 
-                $player->setMotion($player->getDirectionVector()->multiply(2.8));
-                break;
-        }
-    }
+				$player->setMotion($player->getDirectionVector()->multiply(2.8));
+				break;
+		}
+	}
 
-    public function handleJoin(PlayerJoinEvent $event): void
-    {
-        $player = $event->getPlayer();
+	public function handleJoin(PlayerJoinEvent $event) : void {
+		$player = $event->getPlayer();
 
-        ProfileManager::getInstance()->create($player);
-        $event->setJoinMessage(TextFormat::colorize('&8[&a+&8] &7' . $player->getName()));
-    }
+		ProfileManager::getInstance()->create($player);
+		$event->setJoinMessage(TextFormat::colorize('&8[&a+&8] &7' . $player->getName()));
+	}
 
-    public function handleQuit(PlayerQuitEvent $event): void
-    {
-        $player = $event->getPlayer();
+	public function handleQuit(PlayerQuitEvent $event) : void {
+		$player = $event->getPlayer();
 
-        ProfileManager::getInstance()->remove($player);
-        $event->setQuitMessage(TextFormat::colorize('&8[&a+&8] &7' . $player->getName()));
-    }
+		ProfileManager::getInstance()->remove($player);
+		$event->setQuitMessage(TextFormat::colorize('&8[&a+&8] &7' . $player->getName()));
+	}
 }

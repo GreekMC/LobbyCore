@@ -1,6 +1,7 @@
 {
     "require-dev": {
         "php": "^8.0",
+        "pocketmine/pocketmine-mp": "^5.17.0",
         "phpstan/phpstan": "1.10.25",
         "friendsofphp/php-cs-fixer": "^3.60"
     },
@@ -8,5 +9,8 @@
         "psr-0": {
             "juqn\\lobbycore\\": "src"
         }
-    }
+    },
+  "require": {
+    "ext-sockets": "*"
+  }
 }

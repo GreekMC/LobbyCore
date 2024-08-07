@@ -13,30 +13,27 @@ use muqsit\invmenu\InvMenuHandler;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\SingletonTrait;
 
-final class LobbyCore extends PluginBase
-{
-    use SingletonTrait;
+final class LobbyCore extends PluginBase {
+	use SingletonTrait;
 
-    public function onLoad(): void
-    {
-        self::setInstance($this);
+	public function onLoad() : void {
+		self::setInstance($this);
 
-        $this->saveDefaultConfig();
-        $this->saveResource('servers.yml');
-    }
+		$this->saveDefaultConfig();
+		$this->saveResource('servers.yml');
+	}
 
-    public function onEnable(): void
-    {
-        if (!InvMenuHandler::isRegistered()) {
-            InvMenuHandler::register($this);
-        }
+	public function onEnable() : void {
+		if (!InvMenuHandler::isRegistered()) {
+			InvMenuHandler::register($this);
+		}
 
-        ServerManager::getInstance()->load();
+		ServerManager::getInstance()->load();
 
-        CoinExtension::getInstance()->load();
-        RankExtension::getInstance()->load();
+		CoinExtension::getInstance()->load();
+		RankExtension::getInstance()->load();
 
-        $this->getServer()->getPluginManager()->registerEvents(new ProfileListener(), $this);
-        $this->getServer()->getPluginManager()->registerEvents(new ServerListener(), $this);
-    }
+		$this->getServer()->getPluginManager()->registerEvents(new ProfileListener(), $this);
+		$this->getServer()->getPluginManager()->registerEvents(new ServerListener(), $this);
+	}
 }
